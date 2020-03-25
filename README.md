@@ -6,5 +6,5 @@ Group Number: 97
 [HKU Moodle Page](https://moodle.hku.hk/course/view.php?id=74990)
 
 Task List:
-- [ ] Stage 1: Proposal (due Apr 11, ~2.5 weeks from now)
-- [ ] Stage 2: Final Work (due May 9, ~6.5 weeks from now)
+- [ ] Stage 1: Proposal (due Apr 11)
+- [ ] Stage 2: Final Work (due May 9)
