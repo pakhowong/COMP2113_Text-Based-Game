@@ -8,3 +8,15 @@ Group Number: 97
 Task List:
 - [ ] Stage 1: Proposal (due Apr 11)
 - [ ] Stage 2: Final Work (due May 9)
+
+//a brief identification of team members 
+
+//our game description & basic rules 
+
+//features or functions 
+1. generation of random game sets or events 
+2. data structures for storing game status 
+3. dynamic memory management
+4. file input/ outout (e.g. for loading/ saving game status)
+5. program codes in multiple files 
+
