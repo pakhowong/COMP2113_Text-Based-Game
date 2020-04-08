@@ -10,6 +10,8 @@ Task List:
 - [ ] Stage 2: Final Work (due May 9)
 
 //a brief identification of team members 
+Gahyun Lee 3035555834 
+Wong Pak Ho 3035482623
 
 //our game description & basic rules 
 
