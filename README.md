@@ -14,6 +14,13 @@ Gahyun Lee 3035555834
 Wong Pak Ho 3035482623
 
 //our game description & basic rules 
+a labyrinth which the user must find a way out  
+1) player can control the character to move ↑↓←→
+2) follow a path & cannot walk through obstacles
+3) collect some "points" on the way
+4) if "on collision" with certain objects → enter new stage
+5) two types of enemy: movable 'e' that's allocated randomly and immovable 'E' that's located right before the final step  
+6) arrive goal then win
 
 //features or functions 
 1. generation of random game sets or events 
