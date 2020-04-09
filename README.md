@@ -9,12 +9,19 @@ Task List:
 - [ ] Stage 1: Proposal (due Apr 11)
 - [ ] Stage 2: Final Work (due May 9)
 
+* parts to discuss 
+- maybe come up with the name of our game? 
+
+
+
+
 //a brief identification of team members 
 Gahyun Lee 3035555834 
 Wong Pak Ho 3035482623
 
 //our game description & basic rules 
-a labyrinth which the user must find a way out  
+   A labyrinth which the user must find a way out. 
+   A user might face obstacles on one's journey and must fight off the obstacles to win. 
 1) player can control the character to move ↑↓←→
 2) follow a path & cannot walk through obstacles
 3) collect some "points" on the way
