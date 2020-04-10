@@ -50,3 +50,4 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 5. Program codes in multiple files 
 - Upon the start of the game, ask the player to enter the name. The name entered will be used to name of the structure which is used to store and load the game status. 
 - The structure has members of integers that can save information of the player: (1) the entire dynamic 2-D array storing the map (including the location of obstacles and walkable paths), (2) the latest location of the player in a coordinate, (3) the latest location of existing monsters in a coordinate, (4) the location of the treasures that were randomly generated on the first time of the play, (5) the location of the weapons that were randomly generated on the first time of the play, (6) the number of treasures the player has collected, (7) the number of weapons the player has collected, (8) the number of monsters the player has defeated, (9) total score. 
+- 
