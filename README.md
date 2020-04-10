@@ -43,7 +43,7 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 4. File input/outout (e.g. for loading/saving game status)
 - The player can save their current progress of the game anytime by pressing "S" and load any saved progress by pressing "L" on their keyboard.
 - Upon saving, game details including (1) the player's current location (X-axis and Y-axis); (2) the exisiting monsters' current location; (3) the existing treasures' location; (4) size of the map (width and height) and (5) the entire dynamic 2-D array storing the map (including the location of obstacles and walkable paths), will be output to a ".txt" file under the same directory as the program.
-- All the above saved game details will be loaded back to their respective linked list or arrays when the player selected a save file (in ".txt" format) to load.
+- All the above saved game details will be loaded back to their respective linked list or arrays when the player selects a save file (in ".txt" format) to load.
 
 5. Program codes in multiple files 
 - 
