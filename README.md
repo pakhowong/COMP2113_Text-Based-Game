@@ -20,7 +20,7 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 - Treasures are scattered across the dungeon and are marked by "T". Walk near to collect them for bonus points.
 - Monsters are randomly scattered across the dungeon and they will be roaming freely. Avoid them or fight them depending on your choice.  
 - If you're thinking of fighting off the monsters, collect the weapons along your path. They are scattered around and are marked "W". Walk near to collect them. 
-- When you encounter a monster (represented by "m"), you will be directed to a "battle stage" where you will fight the monster using "Paper-Scissors-Stone" mechanism (represented by "1", "2" and "3" respectively). The monster will be defeated and disappear if you beat them, and you will return back to the original stage
+- When you encounter a monster (represented by "m"), you will be directed to a "battle stage" where you will fight the monster using "Paper-Scissors-Stone" mechanism (represented by "1", "2" and "3" respectively). The monster will be defeated and disappear if you beat them, and you will return back to the spot they've took off. 
 - A final boss (represented by "B") is located right before the the goal and will be waiting for you. Unlike other monsters you could choose to avoid, you will have to defeat this one in order to reach the goal and win the game.
 - If you are defeated by the monsters, unfortunately, you lose.
 - You can save the current progress of the game by pressing "S" or load any saved progress by pressing "L" on your keyboard.
@@ -29,8 +29,8 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 (For each function, comments on “what it does”, “what the inputs are” and “what the outputs are” are needed)
 
 1. Generation of random game sets or events
-- "Monsters" (represented by "m") and "treasures" (represented by "T") will be randomly generated across the map
-- During the "battle stage" where the player fight against the monsters using "Paper-Scissors-Stone" mechanism, the monsters' choice will be randomised
+- "Monsters" (represented by "m"), "treasures" (represented by "T"), and "weapons" (represented by "W") will be randomly generated across the map
+- During the "battle stage" where the player fights against the monsters using "Paper-Scissors-Stone" mechanism, the choice of the monster will be randomised
 - The map (which covers the obstacles represented by "X" and the safe paths represented by "0" that the player will walk on) will be randomly generated. A function will be created to evaluate whether the map generated is valid or not by checking whether there is at least one possible path for all game elements (including the player, monsters and treasures) to move from the starting point to the goal.
 
 2. Data structures for storing game status
@@ -46,3 +46,4 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 - All the above saved game details will be loaded back to their respective linked list or arrays when the player selected a save file (in ".txt" format) to load.
 
 5. Program codes in multiple files 
+- 
