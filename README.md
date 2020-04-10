@@ -17,11 +17,12 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 ### Basic Game Rules
 - Control the movement of the character using "W" (Up), "A" (Left), "S" (Down) and "D" (Right).
 - You can only walk along safe paths represented by "0" and you cannot walk through obstacles and walls represented by "X".
-- Treasures are scattered across the dugeon and are marked by "T". Walk near to collect them for bonus points.
-- Monsters are randomly scattered across the dungeon and they will be roaming freely. Avoid them or fight them depending on your choice.
-- When you encountered a monster (represented by "m"), you will be directed to a "battle stage" where you will fight the monster using "Paper-Scissors-Stone" mechanism (represented by "1", "2" and "3" respectively). The monster will be defeated and disappear if you beat them, and you will return back to the original stage
-- After avoiding or defeating all monsters, a final boss (represented by "B") will be located right before the the goal. Similar to other monsters, you will have to defeat it before reaching the goal and win the game.
-- If you are defeated by the monsters unfortunately, you lose.
+- Treasures are scattered across the dungeon and are marked by "T". Walk near to collect them for bonus points.
+- Monsters are randomly scattered across the dungeon and they will be roaming freely. Avoid them or fight them depending on your choice.  
+- If you're thinking of fighting off the monsters, collect the weapons along your path. They are scattered around and are marked "W". Walk near to collect them. 
+- When you encounter a monster (represented by "m"), you will be directed to a "battle stage" where you will fight the monster using "Paper-Scissors-Stone" mechanism (represented by "1", "2" and "3" respectively). The monster will be defeated and disappear if you beat them, and you will return back to the original stage
+- A final boss (represented by "B") is located right before the the goal and will be waiting for you. Unlike other monsters you could choose to avoid, you will have to defeat this one in order to reach the goal and win the game.
+- If you are defeated by the monsters, unfortunately, you lose.
 - You can save the current progress of the game by pressing "S" or load any saved progress by pressing "L" on your keyboard.
 
 ### Technical Features and Functions
