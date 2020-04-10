@@ -34,7 +34,9 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 - The map (which covers the obstacles represented by "X" and the safe paths represented by "0" that the player will walk on) will be randomly generated. A function will be created to evaluate whether the map generated is valid or not by checking whether there is at least one possible path for all game elements (including the player, monsters and treasures) to move from the starting point to the goal.
 
 2. Data structures for storing game status
-- A struct of integers will be created to store the user information, such as "location" of both the player and monsters in terms of X-axis and Y-axis, "treasures" the player has collected so far, "weapons" the player possesses.
+- A struct of integers will be created to store the user information, such as "location" of both the player and monsters in terms of X-axis and Y-axis, "treasures" the player has collected so far, "weapons" the player possesses. The structure will be labeled as the name the player enters at the beginning of the game. 
+- Whenever the player decides to quit, the data within the structure is stored into another file and will be labeled using the same name as the structure. When the player reloads and enters one's name, check to see if the file under that name exists. If the file exists, the game present an option asking if one wants to reload the previous progress. 
+- Upon the answer yes, the game reloads the progress. When loading, the member data within the structure will be read in order. If no, initialization begins and the member data within the structure re-sets to the default value.  
 
 3. Dynamic memory management
 - The map will be stored in a dynamic 2-D array as the player will be allowed to determine the size of the map (i.e. the width and height).
@@ -46,4 +48,4 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 - All the above saved game details will be loaded back to their respective linked list or arrays when the player selects a save file (in ".txt" format) to load.
 
 5. Program codes in multiple files 
-- 
+- Upon the start of the game, ask the player to enter the name. The name entered will be used to name of the structure which is used to store and load the game status. 
