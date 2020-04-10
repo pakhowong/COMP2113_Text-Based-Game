@@ -36,7 +36,7 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 2. Data structures for storing game status
 - A struct of integers will be created to store the user information, such as "location" of both the player and monsters in terms of X-axis and Y-axis, "treasures" the player has collected so far, "weapons" the player possesses. The structure will be labeled as the name the player enters at the beginning of the game. 
 - Whenever the player decides to quit, the data within the structure is stored into another file and will be labeled using the same name as the structure. When the player reloads and enters one's name, check to see if the file under that name exists. If the file exists, the game present an option asking if one wants to reload the previous progress. 
-- Upon the answer yes, the game reloads the progress. When loading, the member data within the structure will be read in order. If no, initialization begins and the member data within the structure re-sets to the default value.  
+- Upon the answer yes, the game reloads the progress. When loading, the members within the structure will be read in order. If no, initialization begins and the members within the structure re-sets to the default value.  
 
 3. Dynamic memory management
 - The map will be stored in a dynamic 2-D array as the player will be allowed to determine the size of the map (i.e. the width and height).
@@ -49,3 +49,4 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 
 5. Program codes in multiple files 
 - Upon the start of the game, ask the player to enter the name. The name entered will be used to name of the structure which is used to store and load the game status. 
+- The structure has members of integers that can save information of the player: (1) the latest location of the player in a coordinate, (2) the latest location of existing monsters in a coordinate, (3) the location of the treasures that were randomly generated on the first time of the play, (4) the location of the weapons that were randomly generated on the first time of the play, (4) the number of treasures the player has collected, (5) the number of weapons the player has collected, (6) the entire dynamic 2-D array storing the map (including the location of obstacles and walkable paths). 
