@@ -34,7 +34,7 @@ In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during
 - The map (which covers the obstacles represented by "X" and the safe paths represented by "0" that the player will walk on) will be randomly generated. A function will be created to evaluate whether the map generated is valid or not by checking whether there is at least one possible path for all game elements (including the player, monsters and treasures) to move from the starting point to the goal.
 
 2. Data structures for storing game status
-- A struct of integers will be created to store the "location" of both the player and monsters in terms of X-axis and Y-axis.
+- A struct of integers will be created to store the user information, such as "location" of both the player and monsters in terms of X-axis and Y-axis, "treasures" the player has collected so far, "weapons" the player possesses.
 
 3. Dynamic memory management
 - The map will be stored in a dynamic 2-D array as the player will be allowed to determine the size of the map (i.e. the width and height).
