@@ -8,11 +8,11 @@ Group Number: 97
 - Wong Pak Ho (3035482623)
 
 ### Game Introduction
-Name of the game: #GAME_NAME#   - maybe come up with the name of our game? 
+Name of the game: Pop-It Pat 
 
 Genre: Labyrinth Role-playing Game
 
-In #GAME_NAME#, you play as a legendary adventurer stuck inside a dungeon during one of your exploration quests. In order to return home safely with the treasure you discovered in the dungeon, you must find a way out while fending off against monsters and their mysterious boss lurking around.
+In *Pop-It Pat*, you play as a legendary adventurer stuck inside a dungeon during one of your exploration quests. In order to return home safely with the treasure you discovered in the dungeon, you must find a way out while fending off against monsters and their mysterious boss lurking around.
 
 ### Controls
 - Player movement: W" (Up), "A" (Left), "S" (Down) and "D" (Right)
