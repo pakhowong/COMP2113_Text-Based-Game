@@ -1,0 +1,219 @@
+#include <iostream>
+#include <time.h>
+#include <cstdlib>
+using namespace std;
+
+const int Max_map_width = 60, Max_map_height = 30;
+// Initialise the 2-D array of map with the maximum map size allowed
+int map[Max_map_height][Max_map_width];
+
+int select_difficulty() {
+    int difficulty = 0;
+    // Allow user to choose various difficulties (size of the map)
+    cout << "Please choose the levels of difficulty (1, 2 or 3):" << endl;
+    while ((difficulty < 1) || (difficulty > 3)) {
+        cout << "Levels of difficulty shall be 1, 2 or 3:" << endl;
+        cin >> difficulty;
+    }
+    return difficulty;
+}
+
+void generate_map(int difficulty) {
+    int height, width;
+    int RNG;
+    switch(difficulty) {
+        case 1:
+            width = 20;
+            height = 10;
+            break;
+        case 2:
+            width = 30;
+            height = 15;
+            break;
+        case 3:
+            width = 40;
+            height = 20;
+            break;
+    }
+    
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            srand(time(0));
+            RNG = rand();
+            RNG = RNG % 2;
+            map[i][j] = RNG;  // Fill the map with either 1 or 0
+            if (map[i][j] == 1) {
+                map[i][j] = -1; // Change all 1 to -1 in order to facilitate the later checking of map vaidity
+            }
+        }
+    }
+
+    // Set the start and end point
+    map[0][0] = 1;
+    map[height - 1][width - 1] = -2;
+}
+
+bool isMapValid(int difficulty) {
+    int temp_map[Max_map_height][Max_map_width];
+    int width, height;
+    switch(difficulty) {
+        case 1:
+            width = 20;
+            height = 10;
+            break;
+        case 2:
+            width = 30;
+            height = 15;
+            break;
+        case 3:
+            width = 40;
+            height = 20;
+            break;
+    }
+
+    // Create a copy of the map
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            temp_map[i][j] = map[i][j];
+        }
+    }
+    
+    int steps = 1;
+    int w = 0, h = 0;
+    bool found = false, valid = false, exhaust = false;
+
+    // Check if the map have "-2" (i.e. the goal) or not
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (temp_map[i][j] == -2) {
+                valid = true;
+                break;
+            }
+        }
+    }
+    // For non-valid map (i.e. without goal), there will be no path to the goal
+    if (not valid) {
+        return 0;
+    }
+
+    /*
+    // Debug use
+    cout << endl << "**********" << endl;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            cout << map[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << "**********" << endl;
+    */
+
+    while (valid && (not found) && (not exhaust)) {
+        // Loop through the map to find the target node
+        // i.e. "1" represet the starting point
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (temp_map[i][j] == steps) {
+                    h = i;
+                    w = j;
+                    
+                    // Break the loop and return the number of steps if -2 (i.e. goal) is found
+                    if (temp_map[h - 1][w] == -2) {
+                        // Top
+                        found = true;
+                        break;
+                    }
+                    if (temp_map[h + 1][w] == -2) {
+                        // Down
+                        found = true;
+                        break;
+                    }
+                    if (temp_map[h][w - 1] == -2) {
+                        // Left
+                        found = true;
+                        break;
+                    }
+                    if (temp_map[h][w + 1] == -2) {
+                        // Right
+                        found = true;
+                        break;
+                    }
+
+                    // Filling all neighbouring "0" nodes with (steps + 1)
+                    if (temp_map[h - 1][w] == 0) {
+                        temp_map[h - 1][w] = steps + 1;
+                    }
+                    if (temp_map[h + 1][w] == 0) {
+                        temp_map[h + 1][w] = steps + 1;
+                    }
+                    if (temp_map[h][w - 1] == 0) {
+                        temp_map[h][w - 1] = steps + 1;
+                    }
+                    if (temp_map[h][w + 1] == 0) {
+                        temp_map[h][w + 1] = steps + 1;
+                    }
+                }
+            }
+            /*
+            // Debug use
+            cout << endl << "**********" << endl;
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    cout << map[i][j] << " ";
+                }
+                cout << endl;
+            }
+            cout << "**********" << endl;
+            */ 
+        }
+        steps++;
+
+        // Check if all possibilities have been eliminated
+        if (steps > (height * width)) {
+            exhaust = true;
+        }
+
+        /*
+        // Debug use
+        cout << endl;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cout << map[i][j] << " ";
+            }
+            cout << endl;
+        }
+        */
+
+    }
+
+    // If a path could not be found after exhausting all efforts, return "No"
+    if (exhaust) {
+        steps = 0;
+    }
+
+    if ((steps - 1) > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+int main() { 
+    int difficulty = select_difficulty();
+    while (1) {
+        generate_map(difficulty);
+        if (isMapValid(difficulty)) {
+            break;
+        }
+    }
+    
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 20; j++) {
+            cout << map[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
