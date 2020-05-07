@@ -35,15 +35,19 @@ void generate_map(int difficulty) {
             height = 20;
             break;
     }
-    
+
+    srand(time(0));
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-            srand(time(0));
             RNG = rand();
-            RNG = RNG % 2;
+            RNG = RNG % 5;
+            //cout << RNG << " ";
             map[i][j] = RNG;  // Fill the map with either 1 or 0
-            if (map[i][j] == 1) {
-                map[i][j] = -1; // Change all 1 to -1 in order to facilitate the later checking of map vaidity
+            if (map[i][j] == 0) {
+                map[i][j] = -1; // Change all 0 to -1 in order to facilitate the later checking of map vaidity
+            }
+            else if (map[i][j] != 0) {
+                map[i][j] = 0;
             }
         }
     }
