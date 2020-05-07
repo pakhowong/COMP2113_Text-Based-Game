@@ -18,7 +18,33 @@ public:
 	virtual void execute() = 0; 
 }; 
 
+class upCommand : public Command
+{
+public: 
+	virtual void execute() { up(); }
+};
 
+class leftCommand : public Command
+{
+public: 
+	virtual void execute() { left(); }
+};
+
+class downCommand : public Command
+{
+public: 
+	virtual void execute() { down(); }
+};
+
+class rightCommand : public Command
+{
+public: 
+	virtual void execute() { right(); }
+};
+
+class InputHandler
+{
+	
 int main() {
 	//loop for command 
 	while (!done) 
