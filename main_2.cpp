@@ -2,6 +2,7 @@
 #include <time.h>
 #include <cstdlib>
 #include <stdio.h>
+#include <string>
 using namespace std;
 
 const int Max_map_width = 60, Max_map_height = 30;
@@ -11,6 +12,7 @@ int map[Max_map_height][Max_map_width]; // Initialise the 2-D array of map with 
 char stage[Max_map_height][Max_map_width];
 int location_x = 0, location_y = 0;
 int treasure = 0, weapon = 0;
+int HP = 10;
 
 void refresh() {
     // Linux ONLY
@@ -352,9 +354,167 @@ bool isGoal(int height, int width) {
     }
 }
 
+string attack_choice(int choice) {
+    string attack_choice;
+    switch(choice) {
+        case 1:
+            attack_choice = "PAPER";
+            break;
+        case 2:
+            attack_choice = "SCISSORS";
+            break;
+        case 3:
+            attack_choice = "STONE";
+            break;
+    }
+    return attack_choice;
+}
+
+void gameover() {
+    refresh();
+    cout << "GAMEOVER" << endl;
+}
+
+void victory() {
+    refresh();
+    cout << "VICTORY" << endl;
+    cout << endl << "You have collected " << treasure << " treasures!" << endl;
+}
+
+void showbattlestage(int health) {
+    refresh();
+    cout << "###############" << endl;
+    cout << "# " << "1: Paper   " << " #" << endl;
+    cout << "# " << "2: Scissors" << " #" << endl;
+    cout << "# " << "3: Stone   " << " #" << endl;
+    cout << "###############" << endl << endl;
+
+    
+    cout << "################" << endl;
+    cout << " Enemy HP: " << health << endl;
+    cout << " Your HP:  " << HP << endl;
+    cout << "################" << endl << endl;
+}
+
+int battle(int health) {
+    refresh();
+    int attack = 1 + weapon;
+    int RNG = 0;
+    int input = 0;
+    bool battle_end = false;
+
+    while (not battle_end) {
+        showbattlestage(health);
+        cout << "Choose your attack mode: ";
+        cin >> input;
+        while ((input > 3) || (input < 1)) {
+            cout << "Choose your attack mode: ";
+            cin >> input;
+            if ((input <= 3) && (input >= 1)) {
+                break;
+            }
+        }
+        cout << endl << "You chose " << attack_choice(input) << endl;
+
+        RNG = rand();
+        RNG = RNG % 3 + 1;  // Random number between 1 to 3
+        cout << "Enemy chose " << attack_choice(RNG) << endl;
+
+        if (((input == 1) && (RNG == 3)) || ((input == 3) && (RNG == 2)) || ((input == 2) && (RNG == 1))) {
+            // Win
+            health -= attack;
+            if (health <= 0) {
+                battle_end = true;
+                break;
+            }
+
+            // Reset
+            input = 0;
+            RNG = 0;
+
+            // Next Round
+            cout << endl << "You WIN" << endl;
+            cout << endl << "READY FOR NEXT ROUND? (Y/N)" << endl;
+            char temp;
+            cin >> temp;
+            while (temp != 'y') {
+                cout << "Press Y to continue" << endl;
+                cin >> temp;
+            }
+        }
+        else if (((input == 1) && (RNG == 2)) || ((input == 2) && (RNG == 3)) || ((input == 3) && (RNG == 1))) {
+            // Lose
+            HP--;
+            if (HP <= 0) {
+                battle_end = true;
+                break;
+            }
+
+            // Reset
+            input = 0;
+            RNG = 0;
+
+            // Next Round
+            cout << endl << "You LOSE" << endl;
+            cout << endl << "READY FOR NEXT ROUND? (Y/N)" << endl;
+            char temp;
+            cin >> temp;
+            while (temp != 'y') {
+                cout << "Press Y to continue" << endl;
+                cin >> temp;
+            }
+        }
+        else if (((input == 1) && (RNG == 1)) || ((input == 2) && (RNG == 2)) || ((input == 3) && (RNG == 3))) {
+            // Reset
+            input = 0;
+            RNG = 0;
+            
+            // Next Round
+            cout << endl << "DRAW" << endl;
+            cout << endl << "READY FOR NEXT ROUND? (Y/N)" << endl;
+            char temp;
+            cin >> temp;
+            while (temp != 'y') {
+                cout << "Press Y to continue" << endl;
+                cin >> temp;
+            }
+        }
+    }
+
+    if (health <= 0) {
+        refresh();
+        cout << "CONGRATULATION!" << endl;
+        cout << endl << "Enemy is defeated" << endl << endl;
+        cout << "Press Y to continue" << endl;
+        char temp;
+        cin >> temp;
+        while (temp != 'y') {
+            cout << "Press Y to continue" << endl;
+            cin >> temp;
+        }
+    }
+
+    return health;
+}
+
 void boss_stage() {
     refresh();
     cout << "BOSS STAGE!!!" << endl;
+    cout << endl << "READY? (Y/N)" << endl;
+    char temp;
+    cin >> temp;
+    while (temp != 'y') {
+        cout << "Press Y to continue" << endl;
+        cin >> temp;
+    }
+    int health = 10;
+    health = battle(health);
+    if (health <= 0) {
+        victory();
+    }
+    else if (HP <= 0) {
+        gameover();
+    }
 }
 
 int main() { 
