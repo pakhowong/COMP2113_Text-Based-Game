@@ -5,9 +5,12 @@
 using namespace std;
 
 const int Max_map_width = 60, Max_map_height = 30;
-// Initialise the 2-D array of map with the maximum map size allowed
-int map[Max_map_height][Max_map_width];
+
+// Game elements
+int map[Max_map_height][Max_map_width]; // Initialise the 2-D array of map with the maximum map size allowed
 char stage[Max_map_height][Max_map_width];
+int location_x = 0, location_y = 0;
+int treasure = 0, weapon = 0;
 
 void refresh() {
     // Linux ONLY
@@ -222,7 +225,8 @@ void generate_game_items(int height, int width, int difficulty) {
 }
 
 void generate_stage (int height, int width) {
-    stage[0][0] = 'S';
+    // Represent the game objects in characters instead of integers
+    stage[0][0] = 'P';
     stage[height - 1][width - 1] = 'B';
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -243,12 +247,114 @@ void generate_stage (int height, int width) {
 }
 
 void showstage(int height, int width) {
+    refresh();
+    //cout << location_x << " " << location_y << endl;
+
+    cout << "###############" << endl;
+    cout << "# " << "Treasure: " << treasure << " #" << endl;
+    cout << "# " << "Weapon:   " << weapon << " #" << endl;
+    cout << "###############" << endl << endl;
+
+    for (int i = 0; i < width; i++) {
+        cout << "##";   // "#" is the map boundary
+    }
+    cout << "##" << endl;
     for (int i = 0; i < height; i++) {
+        cout << "#";
         for (int j = 0; j < width; j++) {
             cout << stage[i][j] << " ";
         }
-        cout << endl;
+        cout << "#" << endl;
     }
+    for (int i = 0; i < width; i++) {
+        cout << "##";
+    }
+    cout << "##" << endl;
+}
+
+void move(int height, int width) {
+    char input;
+    cin >> input;
+    switch(input) {
+        case 'w':
+            // Move up
+            if ((location_x - 1) >= 0) {
+                if (stage[location_x - 1][location_y] != 'x') {
+                    if (stage[location_x - 1][location_y] == 'T') {
+                        treasure++;
+                    }
+                    else if (stage[location_x - 1][location_y] == 'W') {
+                        weapon++;
+                    }
+                    stage[location_x][location_y] = '.';
+                    stage[location_x - 1][location_y] = 'P';
+                    location_x--;
+                }
+            }
+            break;
+        case 'a':
+            // Move left
+            if ((location_y - 1) >= 0) {
+                if (stage[location_x][location_y - 1] != 'x') {
+                    if (stage[location_x][location_y - 1] == 'T') {
+                        treasure++;
+                    }
+                    else if (stage[location_x][location_y - 1] == 'W') {
+                        weapon++;
+                    }
+                    stage[location_x][location_y] = '.';
+                    stage[location_x][location_y - 1] = 'P';
+                    location_y--;
+                }
+            }
+            break;
+        case 's':
+            // Move down
+            if ((location_x + 1) <= (height - 1)) {
+                if (stage[location_x + 1][location_y] != 'x') {
+                    if (stage[location_x + 1][location_y] == 'T') {
+                        treasure++;
+                    }
+                    else if (stage[location_x + 1][location_y] == 'W') {
+                        weapon++;
+                    }
+                    stage[location_x][location_y] = '.';
+                    stage[location_x + 1][location_y] = 'P';
+                    location_x++;
+                }
+            }
+            break;
+        case 'd':
+            // Move right
+            if ((location_y + 1) <= (width - 1)) {
+                if (stage[location_x][location_y + 1] != 'x') {
+                    if (stage[location_x][location_y + 1] == 'T') {
+                        treasure++;
+                    }
+                    else if (stage[location_x][location_y + 1] == 'W') {
+                        weapon++;
+                    }
+                    stage[location_x][location_y] = '.';
+                    stage[location_x][location_y + 1] = 'P';
+                    location_y++;
+                }
+            }
+            break;
+    }
+}
+
+bool isGoal(int height, int width) {
+    if ((location_x == (height - 1)) && (location_y == (width - 1))) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void boss_stage() {
+    refresh();
+    cout << "BOSS STAGE!!!" << endl;
 }
 
 int main() { 
@@ -269,17 +375,22 @@ int main() {
             break;
     }
 
-    while (1) {
+    do {
         generate_map(height, width);
-        if (isMapValid(height, width)) {
-            break;
-        }
     }
+    while (not isMapValid(height, width));
 
     generate_game_items(height, width, difficulty);
     generate_stage(height, width);
 
     showstage(height, width);
+
+    while (not isGoal(height, width)) {
+        move(height, width);
+        showstage(height, width);
+    }
+
+    boss_stage();
 
     return 0;
 }
