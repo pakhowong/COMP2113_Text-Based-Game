@@ -1,11 +1,18 @@
 #include <iostream>
 #include <time.h>
 #include <cstdlib>
+#include <stdio.h>
 using namespace std;
 
 const int Max_map_width = 60, Max_map_height = 30;
 // Initialise the 2-D array of map with the maximum map size allowed
 int map[Max_map_height][Max_map_width];
+
+void refresh() {
+    // Linux ONLY
+    // To clear everything on the screen
+    printf("\033c");
+}
 
 int select_difficulty() {
     int difficulty = 0;
@@ -203,6 +210,31 @@ bool isMapValid(int difficulty) {
     }
 }
 
+void showmap(int difficulty) {
+    int width, height;
+    switch(difficulty) {
+        case 1:
+            width = 20;
+            height = 10;
+            break;
+        case 2:
+            width = 30;
+            height = 15;
+            break;
+        case 3:
+            width = 40;
+            height = 20;
+            break;
+    }
+    
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            cout << map[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main() { 
     int difficulty = select_difficulty();
     while (1) {
@@ -211,13 +243,8 @@ int main() {
             break;
         }
     }
-    
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 20; j++) {
-            cout << map[i][j] << " ";
-        }
-        cout << endl;
-    }
+
+    showmap(difficulty);
 
     return 0;
 }
