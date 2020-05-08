@@ -3,24 +3,29 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string>
+#include <vector>
 using namespace std;
 
-const int Max_map_width = 60, Max_map_height = 30;
+const int Max_map_height = 30, Max_map_width = 60;
 const int Max_enemies = 9;
 
 // Game elements
-int map[Max_map_height][Max_map_width]; // Initialise the 2-D array of map with the maximum map size allowed
-char stage[Max_map_height][Max_map_width];
-int location_x = 0, location_y = 0;
-int treasure = 0, weapon = 0;
-int HP = 10;
+vector < vector < int > > map (Max_map_height, vector < int > (Max_map_width, 0));  // Initialise the 2-D array of map with the maximum map size allowed
+vector < vector < char > > stage (Max_map_height, vector < char > (Max_map_width, 0));
+//char stage[Max_map_height][Max_map_width];
 
 int NumOfEnemies;
 bool isGameover = false;
 
+struct players {
+    int y = 0, x = 0;
+    int treasure = 0, weapon = 0;
+    int HP = 10;
+} player;
+
 struct enemies {
     int health = 5; // Enemies' HP
-    int x, y;   // Enemies' X- and Y-coordinates
+    int y, x;   // Enemies' y- and x-coordinates
 } enemy[Max_enemies];
 
 void refresh() {
@@ -40,6 +45,9 @@ int select_difficulty() {
 }
 
 void generate_map(int height, int width) {
+    map.clear();
+    map.resize(height, vector<int>(width)); // Resize the vector (2-D dynamic map)
+
     int RNG;
     
     srand(time(0));
@@ -184,8 +192,8 @@ void generate_enemies(int height, int width, int difficulty) {
                 if ((stage[i][j] == '.') && (RNG == 1)) {
                     stage[i][j] = 'm';
                     // Set the enemies' location
-                    enemy[enemy_counter].x = i;
-                    enemy[enemy_counter].y = j;
+                    enemy[enemy_counter].y = i;
+                    enemy[enemy_counter].x = j;
 
                     enemy_counter++;
                     if (enemy_counter == NumOfEnemies) {
@@ -283,6 +291,9 @@ void generate_game_items(int height, int width, int difficulty) {
 }
 
 void generate_stage (int height, int width) {
+    stage.clear();
+    stage.resize(height, vector<char>(width)); // Resize the vector (2-D dynamic map)
+
     // Represent the game objects in characters instead of integers
     stage[0][0] = 'P';
     stage[height - 1][width - 1] = 'B';
@@ -308,8 +319,8 @@ void showstage(int height, int width) {
     refresh();
 
     cout << "###############" << endl;
-    cout << "# " << "Treasure: " << treasure << " #" << endl;
-    cout << "# " << "Weapon:   " << weapon << " #" << endl;
+    cout << "# " << "Treasure: " << player.treasure << " #" << endl;
+    cout << "# " << "Weapon:   " << player.weapon << " #" << endl;
     cout << "###############" << endl << endl;
 
     for (int i = 0; i < width; i++) {
@@ -330,9 +341,11 @@ void showstage(int height, int width) {
 }
 
 void destroy_enemy(int enemyID) {
-    enemy[enemyID].x = -1;
-    enemy[enemyID].y = -1;
-    stage[location_x][location_y] = 'P';
+    // Move the enemies out of the map (so they wont "move" anymore)
+    enemy[enemyID].y = -10;
+    enemy[enemyID].x = -10;
+    // Remove the "m" from the map
+    stage[player.y][player.x] = 'P';
 }
 
 string attack_choice(int choice) {
@@ -359,8 +372,9 @@ void gameover() {
 
 void victory() {
     refresh();
+    isGameover = true;
     cout << "VICTORY" << endl;
-    cout << endl << "You have collected " << treasure << " treasures!" << endl;
+    cout << endl << "You have collected " << player.treasure << " treasures!" << endl;
 }
 
 void showbattlestage(int health) {
@@ -374,13 +388,13 @@ void showbattlestage(int health) {
     
     cout << "################" << endl;
     cout << " Enemy HP: " << health << endl;
-    cout << " Your HP:  " << HP << endl;
+    cout << " Your HP:  " << player.HP << endl;
     cout << "################" << endl << endl;
 }
 
 int battle(int health) {
     refresh();
-    int attack = 1 + weapon;
+    int attack = 1 + player.weapon;
     int RNG = 0;
     int input = 0;
     bool battle_end = false;
@@ -392,6 +406,7 @@ int battle(int health) {
         while ((input > 3) || (input < 1)) {
             cout << "Choose your attack mode: ";
             cin >> input;
+            cout << endl;
             if ((input <= 3) && (input >= 1)) {
                 break;
             }
@@ -426,8 +441,8 @@ int battle(int health) {
         }
         else if (((input == 1) && (RNG == 2)) || ((input == 2) && (RNG == 3)) || ((input == 3) && (RNG == 1))) {
             // Lose
-            HP--;
-            if (HP <= 0) {
+            player.HP--;
+            if (player.HP <= 0) {
                 battle_end = true;
                 break;
             }
@@ -475,7 +490,7 @@ int battle(int health) {
             cin >> temp;
         }
     }
-    if (HP <= 0) {
+    if (player.HP <= 0) {
         isGameover = true;
     }
 
@@ -483,51 +498,51 @@ int battle(int health) {
 }
 
 void enemies_movement() {
-    int direction, x, y;
+    int direction, y, x;
     
     for (int i = 0; i < NumOfEnemies; i++) {
         direction = rand() % 4 + 1;
-        x = enemy[i].x;
         y = enemy[i].y;
+        x = enemy[i].x;
 
         switch(direction) {
             case 1:
                 // Move up
-                if (x - 1 >= 0) {
-                    if ((stage[x - 1][y] == '.') || (stage[x - 1][y] == 'P')) {
-                        stage[x][y] = '.';
-                        stage[x - 1][y] = 'm';
-                        enemy[i].x--;
+                if (y - 1 >= 0) {
+                    if ((stage[y - 1][x] == '.') || (stage[y - 1][x] == 'P')) {
+                        stage[y][x] = '.';
+                        stage[y - 1][x] = 'm';
+                        enemy[i].y--;
                     }
                 }
                 break;
             case 2:
                 // Move left
-                if (y - 1 >= 0) {
-                    if ((stage[x][y - 1] == '.') || (stage[x][y - 1] == 'P')) {
-                        stage[x][y] = '.';
-                        stage[x][y - 1] = 'm';
-                        enemy[i].y--;
+                if (x - 1 >= 0) {
+                    if ((stage[y][x - 1] == '.') || (stage[y][x - 1] == 'P')) {
+                        stage[y][x] = '.';
+                        stage[y][x - 1] = 'm';
+                        enemy[i].x--;
                     }
                 }
                 break;
             case 3:
                 // Move down
-                if (x + 1 >= 0) {
-                    if ((stage[x + 1][y] == '.') || (stage[x + 1][y] == 'P')) {
-                        stage[x][y] = '.';
-                        stage[x + 1][y] = 'm';
-                        enemy[i].x++;
+                if (y + 1 >= 0) {
+                    if ((stage[y + 1][x] == '.') || (stage[y + 1][x] == 'P')) {
+                        stage[y][x] = '.';
+                        stage[y + 1][x] = 'm';
+                        enemy[i].y++;
                     }
                 }
                 break;
             case 4:
                 // Move right
-                if (y + 1 >= 0) {
-                    if ((stage[x][y + 1] == '.') || (stage[x][y + 1] == 'P')) {
-                        stage[x][y] = '.';
-                        stage[x][y + 1] = 'm';
-                        enemy[i].y++;
+                if (x + 1 >= 0) {
+                    if ((stage[y][x + 1] == '.') || (stage[y][x + 1] == 'P')) {
+                        stage[y][x] = '.';
+                        stage[y][x + 1] = 'm';
+                        enemy[i].x++;
                     }
                 }
                 break;
@@ -537,13 +552,13 @@ void enemies_movement() {
     // On collision, enter battle stage
     int enemyHP;
     for (int i = 0; i < NumOfEnemies; i++) {
-        if ((location_x == enemy[i].x) && (location_y == enemy[i].y)) {
+        if ((player.y == enemy[i].y) && (player.x == enemy[i].x)) {
             enemyHP = battle(enemy[i].health);
-            if (HP <= 0) {
+            if (player.HP <= 0) {
                 gameover();
                 break;
             }
-            else if ((enemyHP <= 0) && (HP >= 0)) {
+            else if ((enemyHP <= 0) && (player.HP >= 0)) {
                 destroy_enemy(i);
             }
         }
@@ -556,65 +571,65 @@ void move(int height, int width) {
     switch(input) {
         case 'w':
             // Move up
-            if ((location_x - 1) >= 0) {
-                if (stage[location_x - 1][location_y] != 'x') {
-                    if (stage[location_x - 1][location_y] == 'T') {
-                        treasure++;
+            if ((player.y - 1) >= 0) {
+                if (stage[player.y - 1][player.x] != 'x') {
+                    if (stage[player.y - 1][player.x] == 'T') {
+                        player.treasure++;
                     }
-                    else if (stage[location_x - 1][location_y] == 'W') {
-                        weapon++;
+                    else if (stage[player.y - 1][player.x] == 'W') {
+                        player.weapon++;
                     }
-                    stage[location_x][location_y] = '.';
-                    stage[location_x - 1][location_y] = 'P';
-                    location_x--;
+                    stage[player.y][player.x] = '.';
+                    stage[player.y - 1][player.x] = 'P';
+                    player.y--;
                 }
             }
             break;
         case 'a':
             // Move left
-            if ((location_y - 1) >= 0) {
-                if (stage[location_x][location_y - 1] != 'x') {
-                    if (stage[location_x][location_y - 1] == 'T') {
-                        treasure++;
+            if ((player.x - 1) >= 0) {
+                if (stage[player.y][player.x - 1] != 'x') {
+                    if (stage[player.y][player.x - 1] == 'T') {
+                        player.treasure++;
                     }
-                    else if (stage[location_x][location_y - 1] == 'W') {
-                        weapon++;
+                    else if (stage[player.y][player.x - 1] == 'W') {
+                        player.weapon++;
                     }
-                    stage[location_x][location_y] = '.';
-                    stage[location_x][location_y - 1] = 'P';
-                    location_y--;
+                    stage[player.y][player.x] = '.';
+                    stage[player.y][player.x - 1] = 'P';
+                    player.x--;
                 }
             }
             break;
         case 's':
             // Move down
-            if ((location_x + 1) <= (height - 1)) {
-                if (stage[location_x + 1][location_y] != 'x') {
-                    if (stage[location_x + 1][location_y] == 'T') {
-                        treasure++;
+            if ((player.y + 1) <= (height - 1)) {
+                if (stage[player.y + 1][player.x] != 'x') {
+                    if (stage[player.y + 1][player.x] == 'T') {
+                        player.treasure++;
                     }
-                    else if (stage[location_x + 1][location_y] == 'W') {
-                        weapon++;
+                    else if (stage[player.y + 1][player.x] == 'W') {
+                        player.weapon++;
                     }
-                    stage[location_x][location_y] = '.';
-                    stage[location_x + 1][location_y] = 'P';
-                    location_x++;
+                    stage[player.y][player.x] = '.';
+                    stage[player.y + 1][player.x] = 'P';
+                    player.y++;
                 }
             }
             break;
         case 'd':
             // Move right
-            if ((location_y + 1) <= (width - 1)) {
-                if (stage[location_x][location_y + 1] != 'x') {
-                    if (stage[location_x][location_y + 1] == 'T') {
-                        treasure++;
+            if ((player.x + 1) <= (width - 1)) {
+                if (stage[player.y][player.x + 1] != 'x') {
+                    if (stage[player.y][player.x + 1] == 'T') {
+                        player.treasure++;
                     }
-                    else if (stage[location_x][location_y + 1] == 'W') {
-                        weapon++;
+                    else if (stage[player.y][player.x + 1] == 'W') {
+                        player.weapon++;
                     }
-                    stage[location_x][location_y] = '.';
-                    stage[location_x][location_y + 1] = 'P';
-                    location_y++;
+                    stage[player.y][player.x] = '.';
+                    stage[player.y][player.x + 1] = 'P';
+                    player.x++;
                 }
             }
             break;
@@ -623,13 +638,13 @@ void move(int height, int width) {
     // On collision, enter battle stage
     int enemyHP;
     for (int i = 0; i < NumOfEnemies; i++) {
-        if ((location_x == enemy[i].x) && (location_y == enemy[i].y)) {
+        if ((player.y == enemy[i].y) && (player.x == enemy[i].x)) {
             enemyHP = battle(enemy[i].health);
-            if (HP <= 0) {
+            if (player.HP <= 0) {
                 gameover();
                 break;
             }
-            else if ((enemyHP <= 0) && (HP >= 0)) {
+            else if ((enemyHP <= 0) && (player.HP >= 0)) {
                 destroy_enemy(i);
             }
         }
@@ -637,7 +652,7 @@ void move(int height, int width) {
 }
 
 bool isGoal(int height, int width) {
-    if ((location_x == (height - 1)) && (location_y == (width - 1))) {
+    if ((player.y == (height - 1)) && (player.x == (width - 1))) {
         return true;
     }
     else {
@@ -657,15 +672,16 @@ void boss_stage() {
     }
     int health = 10;
     health = battle(health);
-    if (health <= 0) {
-        victory();
-    }
-    else if (HP <= 0) {
+
+    if (player.HP <= 0) {
         gameover();
+    }
+    else if ((health <= 0) && (player.HP >= 0)) {
+        victory();
     }
 }
 
-int main() { 
+int main() {
     int difficulty = select_difficulty();
     int height = 0, width = 0;
     switch(difficulty) {
@@ -707,7 +723,9 @@ int main() {
         if (isGameover) {
             break;
         }
-        boss_stage();
+        else if (not isGameover) {
+            boss_stage();
+        }
     }
 
     return 0;
