@@ -12,7 +12,6 @@ const int Max_enemies = 9;
 // Game elements
 vector < vector < int > > map (Max_map_height, vector < int > (Max_map_width, 0));  // Initialise the 2-D array of map with the maximum map size allowed
 vector < vector < char > > stage (Max_map_height, vector < char > (Max_map_width, 0));
-//char stage[Max_map_height][Max_map_width];
 
 int NumOfEnemies;
 bool isGameover = false;
@@ -567,7 +566,13 @@ void enemies_movement() {
 
 void move(int height, int width) {
     char input;
+
+    system("stty raw");
+    // Set the Linux system to RAW mode, allowing for raw inputs (i.e. read the input without needing to press ENTER)
     cin >> input;
+    system("stty cooked");
+    // Revert the Linux system back to normal mode
+
     switch(input) {
         case 'w':
             // Move up
