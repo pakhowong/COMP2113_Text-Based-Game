@@ -14,6 +14,11 @@ int location_x = 0, location_y = 0;
 int treasure = 0, weapon = 0;
 int HP = 10;
 
+struct enemies {
+    int health; // Enemies' HP
+    int x, y;   // Enemies' X- and Y-coordinates
+} enemy1, enemy2, enemy3;
+
 void refresh() {
     // Linux ONLY
     // To clear everything on the screen
@@ -250,8 +255,13 @@ void generate_stage (int height, int width) {
 
 void showstage(int height, int width) {
     refresh();
-    //cout << location_x << " " << location_y << endl;
-
+    /*
+    // DEBUG USE
+    cout << location_x << " " << location_y << endl;
+    cout << enemy1.x << " " << enemy1.y << endl;
+    cout << enemy2.x << " " << enemy2.y << endl;
+    cout << enemy3.x << " " << enemy3.y << endl;
+    */
     cout << "###############" << endl;
     cout << "# " << "Treasure: " << treasure << " #" << endl;
     cout << "# " << "Weapon:   " << weapon << " #" << endl;
@@ -272,6 +282,54 @@ void showstage(int height, int width) {
         cout << "##";
     }
     cout << "##" << endl;
+}
+
+void enemies_movement(enemies& enemy) {
+    int direction = rand() % 4 + 1;
+
+    switch(direction) {
+        case 1:
+            // Move up
+            if ((enemy.x - 1) >= 0) {
+                if ((stage[enemy.x - 1][enemy.y] == '.') || (stage[enemy.x - 1][enemy.y] == 'P')) {
+                    stage[enemy.x][enemy.y] = '.';
+                    stage[enemy.x - 1][enemy.y] = 'm';
+                    enemy.x--;
+                }
+            }
+            break;
+        case 2:
+            // Move left
+            if ((enemy.y - 1) >= 0) {
+                if ((stage[enemy.x][enemy.y - 1] == '.') || (stage[enemy.x][enemy.y - 1] == 'P')) {
+                    stage[enemy.x][enemy.y] = '.';
+                    stage[enemy.x][enemy.y - 1] = 'm';
+                    enemy.y--;
+                }
+            }
+            break;
+        case 3:
+            // Move down
+            if ((enemy.x + 1) >= 0) {
+                if ((stage[enemy.x + 1][enemy.y] == '.') || (stage[enemy.x + 1][enemy.y] == 'P')) {
+                    stage[enemy.x][enemy.y] = '.';
+                    stage[enemy.x + 1][enemy.y] = 'm';
+                    enemy.x++;
+                }
+            }
+            break;
+        case 4:
+            // Move right
+            if ((enemy.y + 1) >= 0) {
+                if ((stage[enemy.x][enemy.y + 1] == '.') || (stage[enemy.x][enemy.y + 1] == 'P')) {
+                    stage[enemy.x][enemy.y] = '.';
+                    stage[enemy.x][enemy.y + 1] = 'm';
+                    enemy.y++;
+                }
+            }
+            break;
+    }
+
 }
 
 void move(int height, int width) {
@@ -517,6 +575,53 @@ void boss_stage() {
     }
 }
 
+void generate_enemies(int height, int width, int difficulty) {
+    int probability, enemy_counter = 0, RNG;
+    bool enemies_are_generated = false;
+    switch(difficulty) {
+        case 1:
+            probability = 50;
+            break;
+        case 2:
+            probability = 75;
+            break;
+        case 3:
+            probability = 100;
+            break;
+    }
+    while (not enemies_are_generated) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                RNG = rand();
+                RNG = RNG % probability; // Probability of generating an enemy
+                if (enemy_counter == 3) {
+                    enemies_are_generated = true;
+                    break;
+                }
+                if ((stage[i][j] == '.') && (RNG == 1)) {
+                    stage[i][j] = 'm';
+                    enemy_counter++;
+                    // Set the enemies' location
+                    switch(enemy_counter) {
+                        case 1:
+                            enemy1.x = i;
+                            enemy1.y = j;
+                            break;
+                        case 2:
+                            enemy2.x = i;
+                            enemy2.y = j;
+                            break;
+                        case 3:
+                            enemy3.x = i;
+                            enemy3.y = j;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}
+
 int main() { 
     int difficulty = select_difficulty();
     int height = 0, width = 0;
@@ -542,11 +647,16 @@ int main() {
 
     generate_game_items(height, width, difficulty);
     generate_stage(height, width);
+    generate_enemies(height, width, difficulty);
 
     showstage(height, width);
 
     while (not isGoal(height, width)) {
         move(height, width);
+        // Enemies will move after the player's turn ended
+        enemies_movement(enemy1);
+        enemies_movement(enemy2);
+        enemies_movement(enemy3);
         showstage(height, width);
     }
 
