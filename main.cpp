@@ -5,10 +5,10 @@ using namespace std;
 //commands 
 void InputHandler::handleInput()
 {
-	if (isPressed(BUTTON_W)) up(); 
-	else if (isPressed(BUTTON_A)) left(); 
-	else if (isPressed(BUTTON_S)) down(); 
-	else if (isPressed(BUTTON_D)) right(); 
+	if (isPressed(BUTTON_W)) up()-> execute(); 
+	else if (isPressed(BUTTON_A)) left()-> execute(); 
+	else if (isPressed(BUTTON_S)) down()-> execute(); 
+	else if (isPressed(BUTTON_D)) right()-> execute(); 
 }
 
 class Command 
@@ -44,6 +44,16 @@ public:
 
 class InputHandler
 {
+public: 
+	void handleInput(); 
+private:
+	Command* buttonX_; 
+	Command* buttonY_; 
+	Command* buttonA_; 
+	Command* buttonB_; 
+};
+
+void 
 	
 int main() {
 	//loop for command 
