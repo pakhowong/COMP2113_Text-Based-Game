@@ -307,11 +307,6 @@ void generate_stage (int height, int width) {
 void showstage(int height, int width) {
     refresh();
 
-    // Debug use
-    for (int i = 0; i < Max_enemies; i++) {
-        cout << enemy[i].x << " " << enemy[i].y << endl;
-    }
-
     cout << "###############" << endl;
     cout << "# " << "Treasure: " << treasure << " #" << endl;
     cout << "# " << "Weapon:   " << weapon << " #" << endl;
