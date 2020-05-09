@@ -22,6 +22,7 @@ vector < vector < char > > stage (Max_map_height, vector < char > (Max_map_width
 
 int NumOfEnemies;
 bool isGameover = false;
+bool isBossStage = false; 
 
 struct players {
     int y = 0, x = 0;
@@ -497,7 +498,16 @@ int battle(int health) {
     int RNG = 0;
     int input = 0;
     bool battle_end = false;
-
+    
+    if (not isBossStage) 
+    { 
+        showbattlestage(health); 
+    }
+    else 
+    { 
+        showbattlestage; 
+    } 
+    
     while (not battle_end) {
         showbattlestage(health);
         cout << "Choose your attack mode: ";
@@ -767,6 +777,8 @@ bool isGoal(int height, int width) {
 }
 
 void boss_stage() {
+    isBossStage = true; 
+    
     refresh();
     cout << "BOSS STAGE!!!" << endl;
     cout << endl << "Are you READY?" << endl;
