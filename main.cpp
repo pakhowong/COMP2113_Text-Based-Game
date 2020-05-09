@@ -12,10 +12,10 @@ public:
 
 class upCommand : public Command
 {
-public: 
+public:
 	virtual void execute(player) 
 	{ 
-	player.up(); 
+	player.up();
 	}
 };
 
@@ -87,7 +87,75 @@ if (command)
 {
 	command->execute(player); 
 }
+
+void players_movement()
+{
+	int x, y;
+	char command; 
 	
+	x = player.x; //0
+	y = player.y; //0 
+	
+	switch(command) 
+	{
+		case 'W': 
+		//Move up 
+			if (y - 1 >= 0) 
+			{
+				if ((stage[y - 1][x] == '.') || (stage[y - 1][x] == 'P')) 
+				{
+					stage[y][x] = '.';
+					stage[y - 1][x] = 'm';
+					player.y--;
+				}
+			}
+			break;
+		case 'A':
+		//move left 
+			if (x - 1 >= 0) 
+			{
+				if ((stage[y][x - 1] == '.') || (stage[y][x - 1] == 'P')) 
+				{
+					stage[y][x] = '.';
+					stage[y][x - 1] = 'm';
+					player.x--;
+				}
+			}
+			break;	
+		case 'S':
+		//move down 
+			if (y + 1 >= 0) 
+			{
+				if ((stage[y + 1][x] == '.') || (stage[y + 1][x] == 'P')) 
+				{
+					stage[y][x] = '.';
+					stage[y + 1][x] = 'm';
+					player.y++;
+				}
+			}
+			break;
+		case 'D':
+		//move right 
+			if (x + 1 >= 0) 
+			{
+				if ((stage[y][x + 1] == '.') || (stage[y][x + 1] == 'P')) 
+				{
+					stage[y][x] = '.';
+					stage[y][x + 1] = 'm';
+					player.x++;
+				}
+			}
+			break;
+		case 'Q':
+		//quit 
+			if(isGameover == true) 
+			{
+				return;
+			}
+			break; 
+	}
+}
+
 int main() {
 	//loop for command 
 	while (!done) 
