@@ -7,6 +7,31 @@
 #include <fstream>
 using namespace std;
 
+void generate_stage (int height, int width) {
+    stage.clear();
+    stage.resize(height, vector<char>(width)); // Resize the vector (2-D dynamic map)
+
+    // Represent the game objects in characters instead of integers
+    stage[0][0] = 'P';
+    stage[height - 1][width - 1] = 'B';
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (map[i][j] == 0) {
+                stage[i][j] = '.';
+            }
+            else if (map[i][j] == -1) {
+                stage[i][j] = 'x';
+            }
+            else if (map[i][j] == -3) {
+                stage[i][j] = 'T';
+            }
+            else if (map[i][j] == -4) {
+                stage[i][j] = 'W';
+            }
+        }
+    }
+}
+
 void showstage(int height, int width) {
     refresh();
 
