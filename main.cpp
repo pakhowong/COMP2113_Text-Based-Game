@@ -54,6 +54,7 @@ string attack_choice(int);
 void gameover();
 void victory();
 void showbattlestage(int);
+void showbossbattlestage(int);
 int battle(int);
 void enemies_movement();
 void move(int, int, int);
