@@ -7,42 +7,42 @@ class Command
 {
 public: 
 	virtual ~Command() {}
-	virtual void execute(players) = 0; 
+	virtual void execute(player) = 0; 
 }; 
 
 class upCommand : public Command
 {
 public: 
-	virtual void execute(players) 
+	virtual void execute(player) 
 	{ 
-	players.up(); 
+	player.up(); 
 	}
 };
 
 class leftCommand : public Command
 {
 public: 
-	virtual void execute(players) 
+	virtual void execute(player) 
 	{ 
-	players.left(); 
+	player.left(); 
 	}
 };
 
 class downCommand : public Command
 {
 public: 
-	virtual void execute(players) 
+	virtual void execute(player) 
 	{
-	players.down(); 
+	player.down(); 
 	}
 };
 
 class rightCommand : public Command
 {
 public: 
-	virtual void execute(players) 
+	virtual void execute(player) 
 	{
-	players.right(); 
+	player.right(); 
 	}
 };
 
@@ -74,7 +74,7 @@ Command* InputHandler::handleInput()
 Command* command = inputHandler.handlerInput(); 
 if (command) 
 {
-	command->execute(players); 
+	command->execute(player); 
 }
 	
 int main() {
@@ -85,3 +85,6 @@ int main() {
 		handleCommand(command); 
 	}
 }
+
+//save and load 
+
