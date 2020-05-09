@@ -39,17 +39,13 @@ int battle(int health) {
     int input = 0;
     bool battle_end = false;
     
-    if (not isBossStage)
-    {
-        showbattlestage(health);
-    }
-    else
-    {
-        showbattlestage;
-    }
-    
     while (not battle_end) {
-        showbattlestage(health);
+        if (not isBossStage) {
+            showbattlestage(health);
+        }
+        else {
+            showbossbattlestage(health);
+        }
         cout << "Choose your attack mode: ";
         cin >> input;
         while ((input > 3) || (input < 1)) {
@@ -140,6 +136,7 @@ int battle(int health) {
 
     return health;
 }
+
 
 
 bool isGoal(int height, int width) {
