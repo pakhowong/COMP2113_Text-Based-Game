@@ -96,7 +96,7 @@ In *Pop-It Pat*, you play as a legendary adventurer stuck inside a dungeon durin
 **5. Non-standard C/C++ libraries**
 - No non-standard C/C++ libraries are included in this game. All libraries used are standard C/C++ libraries.
 
-**5. Compilation and execution instructions**
+**6. Compilation and execution instructions**
 - The game first starts with the "welcoming page" where it will allow the user to choose whether to start a new game or load previously saved game progress.
   - By inputting "1", the player can start a new game and by inputting "2", the player can load previous progress.
     - However, if not progress has been saved previously, the player cannot choose the option of "2. Load game" or else it may lead to unexpected errors.
@@ -112,3 +112,16 @@ In *Pop-It Pat*, you play as a legendary adventurer stuck inside a dungeon durin
   - Once the player defeated the enemy, he or she will be directed back to the main game. Before that, the player shall randomly press any key (preferably characters) to continue the game.
   - Before entering the battle stage with the boss, the program will ask the user to press any random key (preferably characters) to continue.
   - By defeating the final boss, the player will win the game and the number of collected treasures and the final score will be shown and the program ends.
+
+**7. Sample input and output file**
+- Please refer to the "savelog.txt" in this repository for the sample input and output file. Both input and output files are in similar format, which stores the game progress for the player. The player can choose to load the saved game progress when the game starts. The meaning of each data in the text file are as follows:
+  - The player-related data:
+    - The first integer is the game difficulty, it is a single integer that is used to represent many different variables. For instance, it determines the game map size (2 integer variables of height and width) and the interger variable of the number of enemies.
+    - The second integer is the player's remaining HP (initially 10).
+    - The third and fourth integers are the number of treasures and weapons that the player collected so far.
+    - The fifth and sixth integers are the player's y- and x-coordinates.
+    - The seventh integer is the number of enemies that the player killed, it is use to determine the final score.
+  - The entire game map 
+  - The enemy-related data:
+    - For every 3 integers, they represent 1 enemy.
+    - In each set of 3 integers, the first one is the enemy's HP, the second and third ones are the enemy's y- and x-coordinates.
