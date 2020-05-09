@@ -7,6 +7,12 @@
 #include <fstream>
 using namespace std;
 
+void refresh() {
+    // Linux ONLY
+    // To clear everything on the screen
+    printf("\033c");
+}
+
 void save(int difficulty, int height, int width) {
     ofstream output;
     output.open("savelog.txt");
@@ -115,3 +121,4 @@ bool startgame() {
 
     return isNewGame;
 }
+
