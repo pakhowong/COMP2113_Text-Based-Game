@@ -443,6 +443,23 @@ void victory() {
 
 void showbattlestage(int health) {
     refresh();
+    //player
+    cout << "    _O_    " << endl;    
+    cout << "  /     \  " << endl;    
+    cout << " |==/=\==| " << endl;   
+    cout << " |  O O  | " << endl;    
+    cout << "  \  V  /  " << endl;   
+    cout << "  /`---'\  " << endl;    
+    cout << "  O'_:_`O  " << endl;  
+    cout << "   -- --   " << endl; 
+    
+    //monster 
+    cout << "   .-.    " << endl; 
+    cout << "  (o o)   " << endl; 
+    cout << "  | O \   " << endl; 
+    cout << "   \   \  " << endl; 
+    cout << "    `~~~' " << endl; 
+    
     cout << "###########" << endl;
     cout << "1: Paper   " << endl;
     cout << "2: Scissors" << endl;
@@ -454,6 +471,24 @@ void showbattlestage(int health) {
     cout << " Enemy HP: " << health << endl;
     cout << " Your HP:  " << player.HP << endl;
     cout << "################" << endl << endl;
+
+}
+
+void showbossbattlestage(int health) {
+    //boss monster 
+    cout << "         (  )   /\   _                 (                                            " << endl;
+    cout << "      \ |  (  \ ( \.(               )                      _____                    " << endl;
+    cout << "    \  \ \  `  `   ) \             (  ___                 / _   \                   " << endl;
+    cour << "   (_`    \+   . x  ( .\            \/   \____-----------/ (o)   \_                 " << endl; 
+    cout << "  - .-               \+  ;          (  O                           \____            " << endl;
+    cout << "                            )        \_____________  `              \  /            " << endl;
+    cout << "  (__                +- .( -'.- <. - _  VVVVVVV VV V\                 \/            " << endl;
+    cout << "  (_____            ._._: <_ - <- _  (--  _AAAAAAA__A_/                  |          " << endl;
+    cout << "    .    /./.+-  . .- /  +--  - .     \______________//_              \_______      " << endl;
+    cout << "    (__ ' /x  / x _/ (                                  \___'          \     /      " << endl;
+    cout << "   , x / ( '  . / .  /                                      |           \   /       " << endl;
+    cout << "      /  /  _/ /    +                                      /              \/        " << endl;
+    cout << "     '  (__/                                             /                  \       " << endl;
 }
 
 int battle(int health) {
