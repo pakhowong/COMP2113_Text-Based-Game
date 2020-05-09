@@ -112,3 +112,27 @@ void showbossbattlestage(int health) {
     cout << "      /  /  _/ /    +                                      /              \/        " << endl;
     cout << "     '  (__/                                             /                  \       " << endl;
 }
+
+
+void boss_stage() {
+    isBossStage = true;
+    
+    refresh();
+    cout << "BOSS STAGE!!!" << endl;
+    cout << endl << "Are you READY?" << endl;
+    cout << "Press any key to continue" << endl;
+    char temp;
+    system("stty raw");
+    cin >> temp;
+    system("stty cooked");
+
+    int health = 10;
+    health = battle(health);
+
+    if (player.HP <= 0) {
+        gameover();
+    }
+    else if ((health <= 0) && (player.HP >= 0)) {
+        victory();
+    }
+}
