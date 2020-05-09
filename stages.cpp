@@ -77,7 +77,6 @@ void showbattlestage(int health) {
     cout << "   -- --   " << "                 " << endl; 
     
 
-    
     cout << "###########" << endl;
     cout << "1: Paper   " << endl;
     cout << "2: Scissors" << endl;
