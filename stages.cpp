@@ -65,18 +65,18 @@ void showstage(int height, int width) {
 
 void showbattlestage(int health) {
     refresh();
-    
-    //player & monster 
-    cout << "    _O_    " << "                 " << endl; 
-    cout << "  /     \  " << "                 " << endl; 
-    cout << " |==/=\==| " << "                 " << "   .-.    " << endl;
-    cout << " |  O O  | " << "                 " << "  (o o)   " << endl;
-    cout << "  \  V  /  " << "                 " << "  | O \   " << endl;
-    cout << "  /`---'\  " << "                 " << "   \   \  " << endl;
-    cout << "  O'_:_`O  " << "                 " << "    `~~~' " << endl;
-    cout << "   -- --   " << "                 " << endl; 
-    
 
+    //player & monster 
+    cout << "    _O_    " << "           " << endl; 
+    cout << "  /     \\  " << "           " << endl; 
+    cout << " |==/=\\==| " << "           " << "   .-.    " << endl;
+    cout << " |  O O  | " << "           " << "  (o o)   " << endl;
+    cout << "  \\  V  /  " << "           " << "  | O \\   " << endl;
+    cout << "  /`---'\\  " << "           " << "   \\   \\  " << endl;
+    cout << "  O'_:_`O  " << "           " << "    `~~~' " << endl;
+    cout << "   -- --   " << "           " << endl; 
+    
+    cout << endl << endl;
     cout << "###########" << endl;
     cout << "1: Paper   " << endl;
     cout << "2: Scissors" << endl;
@@ -90,6 +90,7 @@ void showbattlestage(int health) {
     cout << "################" << endl << endl;
 
 }
+
 
 void showbossbattlestage(int health) {
     refresh();
